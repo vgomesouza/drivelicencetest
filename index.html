@@ -1,0 +1,509 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Simulado Class E — Flórida</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --asphalt:#1C1F24;
+    --asphalt-2:#282C33;
+    --sign:#0E5136;
+    --sign-lit:#16724D;
+    --yellow:#FFC72C;
+    --reflect:#F4F3EE;
+    --stop:#A82717;
+    --muted:#8A9099;
+    --radius:4px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--asphalt);
+    color:var(--reflect);
+    font-family:'Barlow',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    font-size:17px;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:640px;margin:0 auto;padding:20px 16px 64px;}
+
+  /* ---- faixa de rolamento como barra de progresso ---- */
+  .lane{
+    height:14px;background:var(--asphalt-2);border-radius:2px;
+    display:flex;align-items:center;overflow:hidden;margin-bottom:6px;
+  }
+  .lane-fill{
+    height:4px;flex:0 0 auto;
+    background:repeating-linear-gradient(90deg,var(--yellow) 0 14px,transparent 14px 26px);
+    transition:width .3s ease;
+  }
+  .meta{
+    display:flex;justify-content:space-between;
+    font-family:'Barlow Condensed',sans-serif;font-weight:600;
+    letter-spacing:.02em;color:var(--muted);font-size:15px;margin-bottom:20px;
+  }
+  .meta b{color:var(--reflect);font-weight:600;}
+
+  /* ---- vitrine da placa ---- */
+  .sign{
+    background:linear-gradient(#3D444D,#2A2F36);
+    border-radius:var(--radius);
+    padding:26px 20px;margin-bottom:14px;
+    display:flex;justify-content:center;
+  }
+  .sign svg{width:170px;height:170px;display:block;}
+  @media (max-width:420px){.sign svg{width:140px;height:140px;}}
+
+  /* ---- painel verde de placa ---- */
+  .panel{
+    background:var(--sign);
+    border-radius:var(--radius);
+    padding:7px;
+    margin-bottom:22px;
+  }
+  .panel-inner{
+    border:2px solid rgba(244,243,238,.85);
+    border-radius:2px;
+    padding:22px 18px;
+  }
+  .tag{
+    font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:15px;
+    color:rgba(244,243,238,.7);margin-bottom:8px;
+  }
+  .q{
+    font-family:'Barlow Condensed',sans-serif;
+    font-weight:600;font-size:27px;line-height:1.2;margin:0;
+  }
+
+  /* ---- alternativas ---- */
+  .opt{
+    display:block;width:100%;text-align:left;
+    background:var(--asphalt-2);color:var(--reflect);
+    border:none;border-left:5px solid #3A4048;
+    border-radius:var(--radius);
+    padding:14px 16px;margin-bottom:9px;
+    font:inherit;cursor:pointer;
+    transition:background .15s,border-color .15s;
+  }
+  .opt:hover:not(:disabled){background:#31363E;}
+  .opt:focus-visible{outline:3px solid var(--yellow);outline-offset:2px;}
+  .opt:disabled{cursor:default;}
+  .opt.right{border-left-color:var(--sign-lit);background:#1C3A2C;}
+  .opt.wrong{border-left-color:var(--stop);background:#3A1F1C;}
+  .opt.dim{opacity:.45;}
+
+  /* ---- explicação ---- */
+  .exp{
+    border-left:5px solid var(--yellow);
+    background:var(--asphalt-2);
+    border-radius:var(--radius);
+    padding:16px;margin-top:18px;
+  }
+  .verdict{
+    font-family:'Barlow Condensed',sans-serif;font-weight:700;
+    font-size:19px;margin-bottom:4px;
+  }
+  .verdict.ok{color:#54C48D;}
+  .verdict.no{color:#E8735F;}
+  .exp p{margin:0;color:#D6D3CB;}
+
+  /* ---- botões ---- */
+  .btn{
+    font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:19px;
+    background:var(--yellow);color:var(--asphalt);
+    border:none;border-radius:var(--radius);
+    padding:13px 26px;cursor:pointer;margin-top:18px;
+  }
+  .btn:hover{background:#FFD558;}
+  .btn:focus-visible{outline:3px solid var(--reflect);outline-offset:2px;}
+  .btn.ghost{background:none;color:var(--muted);border:1.5px solid #3A4048;}
+  .btn.ghost:hover{color:var(--reflect);border-color:var(--muted);background:none;}
+
+  /* ---- tela inicial ---- */
+  h1{
+    font-family:'Barlow Condensed',sans-serif;font-weight:700;
+    font-size:40px;line-height:1.05;margin:0 0 6px;
+  }
+  .sub{color:var(--muted);margin:0 0 30px;}
+  .field{margin-bottom:24px;}
+  .label{
+    font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:16px;
+    color:var(--muted);margin-bottom:9px;
+  }
+  .chips{display:flex;flex-wrap:wrap;gap:8px;}
+  .chip{
+    font:inherit;font-size:15px;
+    background:var(--asphalt-2);color:#C9C6BE;
+    border:1.5px solid #3A4048;border-radius:20px;
+    padding:7px 15px;cursor:pointer;
+  }
+  .chip:hover{border-color:var(--muted);}
+  .chip:focus-visible{outline:3px solid var(--yellow);outline-offset:2px;}
+  .chip[aria-pressed="true"]{
+    background:var(--yellow);border-color:var(--yellow);color:var(--asphalt);font-weight:600;
+  }
+
+  /* ---- resultado ---- */
+  .score{
+    font-family:'Barlow Condensed',sans-serif;font-weight:700;
+    font-size:76px;line-height:1;margin:0;
+  }
+  .score.pass{color:#54C48D;}
+  .score.fail{color:#E8735F;}
+  .verdict-big{font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:23px;margin:2px 0 20px;}
+  .review{border-top:1px solid #3A4048;padding-top:16px;margin-top:28px;}
+  .review h2{font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:20px;margin:0 0 14px;}
+  .miss{border-left:3px solid var(--stop);padding:0 0 0 14px;margin-bottom:18px;}
+  .miss .mq{font-weight:600;margin:0 0 3px;}
+  .miss .ma{color:#54C48D;margin:0 0 3px;font-size:16px;}
+  .miss .me{color:var(--muted);margin:0;font-size:16px;}
+  .actions{display:flex;gap:10px;flex-wrap:wrap;}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;}}
+</style>
+
+<div class="wrap" id="app"></div>
+
+<script>
+const F = "font-family:'Barlow Condensed',sans-serif;font-weight:700";
+const SIGNS = {
+stop:`<svg viewBox="0 0 100 100" role="img" aria-label="Placa octogonal vermelha">
+<polygon points="30,3 70,3 97,30 97,70 70,97 30,97 3,70 3,30" fill="#C0261E"/>
+<polygon points="31.5,7 68.5,7 93,31.5 93,68.5 68.5,93 31.5,93 7,68.5 7,31.5" fill="none" stroke="#fff" stroke-width="3.5"/>
+<text x="50" y="59" text-anchor="middle" fill="#fff" font-size="26" style="${F}">STOP</text></svg>`,
+
+yield:`<svg viewBox="0 0 100 100" role="img" aria-label="Placa triangular invertida">
+<polygon points="4,12 96,12 50,93" fill="#C0261E"/>
+<polygon points="17,20 83,20 50,78" fill="#fff"/>
+<text x="50" y="43" text-anchor="middle" fill="#C0261E" font-size="17" style="${F}">YIELD</text></svg>`,
+
+curve:`<svg viewBox="0 0 100 100" role="img" aria-label="Losango amarelo com seta curva">
+<polygon points="50,2 98,50 50,98 2,50" fill="#F5C518" stroke="#111" stroke-width="3"/>
+<path d="M40 76 L40 55 Q40 40 55 40 L64 40" fill="none" stroke="#111" stroke-width="7" stroke-linecap="square"/>
+<polygon points="60,27 78,40 60,53" fill="#111"/></svg>`,
+
+soft:`<svg viewBox="0 0 100 100" role="img" aria-label="Losango amarelo escrito SOFT SHOULDER">
+<polygon points="50,2 98,50 50,98 2,50" fill="#F5C518" stroke="#111" stroke-width="3"/>
+<text x="50" y="46" text-anchor="middle" fill="#111" font-size="15" style="${F}">SOFT</text>
+<text x="50" y="63" text-anchor="middle" fill="#111" font-size="15" style="${F}">SHOULDER</text></svg>`,
+
+school:`<svg viewBox="0 0 100 100" role="img" aria-label="Placa pentagonal verde-limão">
+<polygon points="50,3 97,31 97,97 3,97 3,31" fill="#C6E600" stroke="#111" stroke-width="3"/>
+<circle cx="38" cy="48" r="6" fill="#111"/><path d="M38 55 L33 72 L33 88 M38 55 L44 72 L44 88 M28 62 L48 62" stroke="#111" stroke-width="5" fill="none" stroke-linecap="round"/>
+<circle cx="65" cy="45" r="5" fill="#111"/><path d="M65 51 L61 68 L58 86 M65 51 L70 68 L72 86 M56 58 L74 58" stroke="#111" stroke-width="4.5" fill="none" stroke-linecap="round"/></svg>`,
+
+pennant:`<svg viewBox="0 0 100 100" role="img" aria-label="Flâmula amarela apontando para a direita">
+<polygon points="4,8 96,50 4,92" fill="#F5C518" stroke="#111" stroke-width="3"/>
+<text x="34" y="42" text-anchor="middle" fill="#111" font-size="13" style="${F}">NO</text>
+<text x="34" y="56" text-anchor="middle" fill="#111" font-size="13" style="${F}">PASSING</text>
+<text x="34" y="70" text-anchor="middle" fill="#111" font-size="13" style="${F}">ZONE</text></svg>`,
+
+work:`<svg viewBox="0 0 100 100" role="img" aria-label="Losango laranja escrito ROAD WORK AHEAD">
+<polygon points="50,2 98,50 50,98 2,50" fill="#E8751A" stroke="#111" stroke-width="3"/>
+<text x="50" y="43" text-anchor="middle" fill="#111" font-size="14" style="${F}">ROAD WORK</text>
+<text x="50" y="60" text-anchor="middle" fill="#111" font-size="14" style="${F}">AHEAD</text></svg>`,
+
+services:`<svg viewBox="0 0 100 100" role="img" aria-label="Placa azul de serviços">
+<rect x="6" y="6" width="88" height="88" rx="6" fill="#12559C" stroke="#fff" stroke-width="3.5"/>
+<path d="M34 24 L34 52 M27 24 L27 38 Q27 44 34 44 M41 24 L41 38 Q41 44 34 44 M34 52 L34 78" stroke="#fff" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+<path d="M66 24 Q73 30 73 42 Q73 50 66 50 L66 78 M66 50 Q59 50 59 42 Q59 30 66 24" stroke="#fff" stroke-width="4.5" fill="none" stroke-linecap="round"/></svg>`,
+
+crossbuck:`<svg viewBox="0 0 100 100" role="img" aria-label="Cruz de Santo André ferroviária">
+<g transform="rotate(45 50 50)"><rect x="10" y="42" width="80" height="16" fill="#fff" stroke="#111" stroke-width="2.5"/>
+<text x="50" y="54" text-anchor="middle" fill="#111" font-size="11" style="${F}">RAILROAD</text></g>
+<g transform="rotate(-45 50 50)"><rect x="10" y="42" width="80" height="16" fill="#fff" stroke="#111" stroke-width="2.5"/>
+<text x="50" y="54" text-anchor="middle" fill="#111" font-size="11" style="${F}">CROSSING</text></g></svg>`,
+
+rrcircle:`<svg viewBox="0 0 100 100" role="img" aria-label="Placa circular amarela com R X R">
+<circle cx="50" cy="50" r="47" fill="#F5C518" stroke="#111" stroke-width="3"/>
+<path d="M22 22 L78 78 M78 22 L22 78" stroke="#111" stroke-width="6"/>
+<text x="21" y="57" text-anchor="middle" fill="#111" font-size="24" style="${F}">R</text>
+<text x="79" y="57" text-anchor="middle" fill="#111" font-size="24" style="${F}">R</text></svg>`,
+
+speed:`<svg viewBox="0 0 100 100" role="img" aria-label="Placa retangular branca de limite de velocidade">
+<rect x="14" y="4" width="72" height="92" rx="4" fill="#fff" stroke="#111" stroke-width="3"/>
+<rect x="19" y="9" width="62" height="82" rx="2" fill="none" stroke="#111" stroke-width="2"/>
+<text x="50" y="30" text-anchor="middle" fill="#111" font-size="15" style="${F}">SPEED</text>
+<text x="50" y="45" text-anchor="middle" fill="#111" font-size="15" style="${F}">LIMIT</text>
+<text x="50" y="80" text-anchor="middle" fill="#111" font-size="34" style="${F}">30</text></svg>`,
+
+noenter:`<svg viewBox="0 0 100 100" role="img" aria-label="Placa vermelha com barra branca">
+<rect x="4" y="4" width="92" height="92" rx="6" fill="#C0261E" stroke="#fff" stroke-width="3"/>
+<circle cx="50" cy="42" r="30" fill="#C0261E" stroke="#fff" stroke-width="4"/>
+<rect x="26" y="35" width="48" height="14" fill="#fff"/>
+<text x="50" y="86" text-anchor="middle" fill="#fff" font-size="14" style="${F}">DO NOT ENTER</text></svg>`,
+
+oneway:`<svg viewBox="0 0 100 100" role="img" aria-label="Placa preta com seta branca">
+<rect x="2" y="28" width="96" height="44" fill="#111" stroke="#fff" stroke-width="2.5"/>
+<rect x="20" y="46" width="46" height="8" fill="#fff"/>
+<polygon points="62,38 82,50 62,62" fill="#fff"/>
+<text x="20" y="24" text-anchor="middle" fill="#fff" font-size="13" style="${F}">ONE WAY</text></svg>`,
+
+signal:`<svg viewBox="0 0 100 100" role="img" aria-label="Losango amarelo com semáforo">
+<polygon points="50,2 98,50 50,98 2,50" fill="#F5C518" stroke="#111" stroke-width="3"/>
+<rect x="38" y="22" width="24" height="56" rx="4" fill="none" stroke="#111" stroke-width="4"/>
+<circle cx="50" cy="35" r="6" fill="#111"/><circle cx="50" cy="50" r="6" fill="none" stroke="#111" stroke-width="3"/><circle cx="50" cy="65" r="6" fill="none" stroke="#111" stroke-width="3"/></svg>`,
+
+merge:`<svg viewBox="0 0 100 100" role="img" aria-label="Losango amarelo com setas convergindo">
+<polygon points="50,2 98,50 50,98 2,50" fill="#F5C518" stroke="#111" stroke-width="3"/>
+<path d="M42 82 L42 46 Q42 34 52 30" fill="none" stroke="#111" stroke-width="7" stroke-linecap="square"/>
+<path d="M68 82 L68 56 Q68 42 56 34" fill="none" stroke="#111" stroke-width="7" stroke-linecap="square"/>
+<polygon points="40,18 52,38 30,36" fill="#111"/></svg>`,
+
+guide:`<svg viewBox="0 0 100 100" role="img" aria-label="Placa retangular verde de orientação">
+<rect x="2" y="22" width="96" height="56" rx="4" fill="#14653F" stroke="#fff" stroke-width="3"/>
+<rect x="7" y="27" width="86" height="46" rx="2" fill="none" stroke="#fff" stroke-width="2"/>
+<text x="50" y="48" text-anchor="middle" fill="#fff" font-size="15" style="${F}">EXIT 25</text>
+<text x="50" y="66" text-anchor="middle" fill="#fff" font-size="13" style="${F}">US 41 SOUTH</text></svg>`
+};
+
+const BANK = [
+/* ===== PREFERÊNCIA DE PASSAGEM ===== */
+{c:"Preferência",q:"Two vehicles reach an open (uncontrolled) intersection at the same time. Who must yield?",o:["The vehicle on the left","The vehicle on the right","The larger vehicle","The vehicle going straight"],a:0,e:"Quem tem outro carro à sua direita cede. Repare que a pergunta é quem CEDE, não quem passa."},
+{c:"Preferência",q:"You are turning left at an intersection. An oncoming car is going straight. You must:",o:["Turn quickly before it arrives","Yield to the oncoming car","Sound your horn and turn","Proceed if you signaled first"],a:1,e:"Quem vira à esquerda sempre cede para quem vem no sentido contrário seguindo reto ou virando à direita."},
+{c:"Preferência",q:"You are leaving a parking lot and entering a public street. You must:",o:["Yield to all traffic and pedestrians","Proceed if no car is visible","Yield only to vehicles, not pedestrians","Sound your horn before entering"],a:0,e:"Saindo de estacionamento, garagem ou beco, você cede para todo mundo, incluindo pedestres na calçada."},
+{c:"Preferência",q:"At a four-way stop, two cars arrive at the same time. The correct rule is:",o:["The car that stopped first goes first","The car on the left goes first","The car on the right goes first","Both go at the same time"],a:2,e:"Chegou junto, o carro da direita passa. Se um chegou antes, quem chegou primeiro vai primeiro."},
+{c:"Preferência",q:"You are entering a roundabout. You must:",o:["Yield to traffic already in the circle","Stop completely before entering","Speed up to merge","Yield only to vehicles on your right"],a:0,e:"Quem entra cede para quem já está girando. Não é preciso parar se estiver livre."},
+{c:"Preferência",q:"A pedestrian is crossing in a marked crosswalk with no traffic light. You must:",o:["Sound your horn","Yield the right-of-way to the pedestrian","Proceed if you can pass safely behind them","Yield only if the pedestrian is elderly"],a:1,e:"Pedestre na faixa tem preferência. Nunca ultrapasse um carro parado na faixa de pedestres — ele pode estar cedendo para alguém que você não vê."},
+{c:"Preferência",q:"You are driving on an unpaved road that meets a paved road. You must:",o:["Yield to traffic on the paved road","Take the right-of-way","Stop only if a sign says so","Yield only to trucks"],a:0,e:"Rua de terra sempre cede para rua pavimentada."},
+{c:"Preferência",q:"A funeral procession is passing through an intersection. You should:",o:["Cut into the procession if there is a gap","Yield and not interrupt the procession","Proceed if your light is green","Follow closely behind the last car"],a:1,e:"Não corte um cortejo fúnebre, mesmo com o sinal verde para você."},
+{c:"Preferência",q:"You are merging onto a highway from an on-ramp. You should:",o:["Stop at the end of the ramp","Match the speed of highway traffic and yield","Force your way into the lane","Use the shoulder to accelerate"],a:1,e:"Use a faixa de aceleração para igualar a velocidade e ceda a quem já está na rodovia. Parar no fim da rampa é perigoso."},
+{c:"Preferência",q:"A blind pedestrian using a white cane or guide dog is at the corner. You must:",o:["Sound your horn to warn them","Come to a complete stop and yield","Drive slowly around them","Wait only if they step off the curb"],a:1,e:"Pedestre cego com bengala branca ou cão-guia: pare completamente. É exigência legal na Flórida."},
+{c:"Preferência",q:"You are backing out of a driveway. Who has the right-of-way?",o:["You do, since you signaled","Traffic and pedestrians already on the road","Whoever arrives first","Neither party"],a:1,e:"Dando ré para a via, você cede para todos. Ré é a manobra com maior índice de colisão em baixa velocidade."},
+{c:"Preferência",q:"Two cars arrive at a T-intersection. The car on the through road and the car on the ending road arrive together. Who yields?",o:["The car on the through road","The car on the road that ends","Neither","The car on the left"],a:1,e:"Quem está na via que termina cede para quem está na via contínua."},
+
+/* ===== PLACAS E SINALIZAÇÃO ===== */
+{c:"Placas",s:"stop",q:"This sign always means:",o:["Yield","Stop","No passing","School zone"],a:1,e:"O octógono é usado só para o STOP. Dá para reconhecer só pelo formato, mesmo sem ler."},
+{c:"Placas",s:"yield",q:"This sign means:",o:["Stop","Yield","No entry","Merge"],a:1,e:"Triângulo invertido é YIELD, ceder a passagem. Reduza e pare só se houver alguém vindo."},
+{c:"Placas",s:"curve",q:"A sign of this shape and color is used to:",o:["Give directions","Warn of a hazard ahead","Show a speed limit","Mark a school zone"],a:1,e:"Losango amarelo é sempre advertência: curva, cruzamento, acostamento fofo, animais."},
+{c:"Placas",s:"school",q:"This sign indicates:",o:["A railroad crossing","A school zone or school crossing","A hospital","A no-passing zone"],a:1,e:"Pentágono é zona ou travessia escolar. Reduza e fique atento a crianças."},
+{c:"Placas",s:"work",q:"Signs of this color on a road indicate:",o:["A detour to a scenic route","A work zone","A toll road","A hospital zone"],a:1,e:"Laranja é obra. Na Flórida, multas dobram em zona de obra com trabalhadores presentes."},
+{c:"Placas",s:"soft",q:"This sign warns you to:",o:["Use the shoulder as a passing lane","Not leave the pavement","Increase your following distance","Expect a sharp curve"],a:1,e:"O acostamento é de terra ou areia solta e não sustenta o carro. Não saia da pista, exceto em emergência."},
+{c:"Placas",q:"A solid yellow line on your side of the road means:",o:["You may pass","You may not pass","Passing is allowed at intersections","The road ends ahead"],a:1,e:"A linha do SEU lado é que manda. Contínua do seu lado: proibido ultrapassar."},
+{c:"Placas",q:"White lines on the pavement separate:",o:["Traffic moving in opposite directions","Traffic moving in the same direction","Parking areas only","Bike lanes only"],a:1,e:"Branca separa faixas do mesmo sentido. Amarela separa sentidos opostos. Vale para toda a sinalização horizontal dos EUA."},
+{c:"Placas",q:"A flashing yellow traffic light means:",o:["Stop completely","Slow down and proceed with caution","The light is broken; treat it as a stop sign","Speed up to clear the intersection"],a:1,e:"Amarelo piscante: siga com cautela. Vermelho piscante equivale a uma placa de PARE."},
+{c:"Placas",q:"A steady yellow traffic light means:",o:["Speed up to beat the red","Stop if you can do so safely","Stop only if pedestrians are present","The light will stay yellow"],a:1,e:"Amarelo fixo: pare, se der para parar com segurança. Se já estiver dentro do cruzamento, complete a passagem."},
+{c:"Placas",s:"services",q:"A road sign of this color generally indicates:",o:["Motorist services such as food, gas, or lodging","A warning","A construction zone","A recreational area"],a:0,e:"Azul é serviços ao motorista. Marrom é área recreativa ou histórica, verde é orientação e direção."},
+{c:"Placas",s:"pennant",q:"This sign, posted on the left side of the road, marks:",o:["A school crossing","The beginning of a no-passing zone","A railroad crossing","A merge point"],a:1,e:"A flâmula amarela fica do lado esquerdo e marca o início de trecho proibido para ultrapassagem."},
+{c:"Placas",q:"A double solid yellow line in the center of the road means:",o:["Either direction may pass","Neither direction may pass","Passing is allowed only during the day","The road is one-way"],a:1,e:"Dupla contínua: ninguém ultrapassa, nos dois sentidos. Você pode cruzá-la para entrar numa garagem à esquerda."},
+{c:"Placas",s:"crossbuck",q:"This sign is posted at:",o:["A school crossing","A railroad crossing","A pedestrian crossing","A highway exit"],a:1,e:"O crossbuck marca a passagem de nível. Ele tem o mesmo peso legal de uma placa de YIELD: você cede ao trem sempre."},
+{c:"Placas",s:"rrcircle",q:"This sign tells you that:",o:["A railroad crossing is ahead","You are entering a roundabout","A rest area is ahead","Traffic merges ahead"],a:0,e:"Círculo amarelo com R X R é o aviso antecipado de cruzamento ferroviário. Reduza e prepare-se para parar."},
+{c:"Placas",s:"noenter",q:"This sign means:",o:["The road is closed for repairs","Do not enter — traffic comes from the other direction","Stop and then proceed","No parking beyond this point"],a:1,e:"Você está prestes a entrar na contramão, geralmente numa saída de rodovia ou rua de mão única."},
+{c:"Placas",s:"oneway",q:"This sign means that traffic:",o:["May travel in both directions","Flows only in the direction of the arrow","Must turn right","Must merge"],a:1,e:"Rua de mão única. O tráfego só corre no sentido da seta."},
+{c:"Placas",s:"speed",q:"This sign indicates:",o:["A suggested speed for curves","The maximum legal speed under ideal conditions","The minimum speed allowed","The average speed of traffic"],a:1,e:"É o limite máximo em condições ideais. Com chuva ou neblina, você deve andar abaixo dele mesmo sem outra placa."},
+{c:"Placas",s:"signal",q:"This sign warns you that:",o:["A traffic signal is ahead","A police checkpoint is ahead","The road is closed","A school is ahead"],a:0,e:"Semáforo à frente, muitas vezes escondido por curva ou lombada. Reduza e prepare-se para parar."},
+{c:"Placas",s:"merge",q:"This sign means:",o:["The road ends ahead","Traffic merges ahead; adjust your speed and position","Passing is prohibited","A divided highway begins"],a:1,e:"Confluência à frente. Ajuste velocidade e posição para abrir espaço — quem entra cede, mas você deve colaborar."},
+{c:"Placas",s:"guide",q:"A road sign of this color provides:",o:["A warning of danger","Guidance and directional information","Regulatory rules you must obey","Information about services"],a:1,e:"Verde é orientação: saídas, distâncias, direções. Vermelho é proibição, amarelo é advertência, azul é serviços."},
+
+/* ===== VELOCIDADE E FAIXAS ===== */
+{c:"Velocidade",q:"Unless otherwise posted, the speed limit in a Florida business or residential district is:",o:["20 mph","30 mph","45 mph","55 mph"],a:1,e:"30 mph é o padrão em área comercial ou residencial quando não há placa."},
+{c:"Velocidade",q:"Unless otherwise posted, the maximum speed limit on a Florida rural interstate is:",o:["55 mph","65 mph","70 mph","75 mph"],a:2,e:"70 mph nas interestaduais rurais. Em vias comuns sem placa, 55 mph."},
+{c:"Velocidade",q:"Unless otherwise posted, the speed limit in a school zone during posted hours is:",o:["15 mph","20 mph","25 mph","30 mph"],a:1,e:"20 mph é o padrão em zona escolar, no horário sinalizado. Multas nessas zonas são agravadas."},
+{c:"Velocidade",q:"Driving much slower than the flow of traffic is:",o:["Always the safest choice","Legal and encouraged","Dangerous and can be ticketed","Allowed only in the right lane"],a:2,e:"Andar muito abaixo do fluxo cria risco e é infração na Flórida. Se precisar ir devagar, use a faixa da direita."},
+{c:"Velocidade",q:"On a multi-lane highway, the left lane should generally be used for:",o:["Traveling at any speed","Passing and faster traffic","Slow-moving vehicles","Exiting the highway"],a:1,e:"Faixa da esquerda é para ultrapassar. Na Flórida é infração bloquear a esquerda andando devagar."},
+{c:"Velocidade",q:"A center lane marked with a solid yellow line on the outside and a broken yellow line on the inside is:",o:["A passing lane","A two-way left turn lane","A carpool lane","A bus-only lane"],a:1,e:"É a faixa central compartilhada, só para converter à esquerda. Não pode trafegar nem ultrapassar por ela."},
+{c:"Velocidade",q:"Hydroplaning usually begins at speeds around:",o:["10 mph","20 mph","35 mph","60 mph"],a:2,e:"A aquaplanagem começa por volta de 35 mph em pista molhada. Reduza e evite frear bruscamente."},
+{c:"Velocidade",q:"When you begin to hydroplane, you should:",o:["Brake hard immediately","Ease off the accelerator and steer straight","Accelerate to regain traction","Turn the wheel sharply"],a:1,e:"Tire o pé do acelerador, mantenha o volante firme e reto, e espere os pneus reencontrarem o asfalto."},
+{c:"Velocidade",q:"You must signal your intention to turn at least:",o:["50 feet before the turn","100 feet before the turn","200 feet before the turn","Only when other cars are present"],a:1,e:"Pelo menos 100 pés (cerca de 30 metros) antes da conversão."},
+{c:"Velocidade",q:"When passing a bicyclist in Florida, you must allow a clearance of at least:",o:["1 foot","3 feet","6 feet","10 feet"],a:1,e:"Mínimo de 3 pés (cerca de 1 metro) ao ultrapassar um ciclista. Reduza e passe apenas quando for seguro."},
+{c:"Velocidade",q:"A motorcycle on the road is entitled to:",o:["Half a lane","A full lane of traffic","Only the shoulder","The left lane only"],a:1,e:"A motocicleta tem direito à faixa inteira. Não divida a faixa com ela nem a ultrapasse por dentro."},
+{c:"Velocidade",q:"You are following a large truck. The safest position is:",o:["Directly behind, close to its bumper","Far enough back to see its side mirrors","In its blind spot on the right","Alongside its rear wheels"],a:1,e:"Se você não enxerga os espelhos do caminhão, o motorista não enxerga você. Mantenha distância."},
+
+/* ===== ÁLCOOL, LEIS E DOCUMENTOS ===== */
+{c:"Leis",q:"In Florida, a driver 21 or older is legally impaired at a blood alcohol level of:",o:["0.02% or higher","0.05% or higher","0.08% or higher","0.10% or higher"],a:2,e:"0.08% para maiores de 21. Para menores de 21, o limite é 0.02%, praticamente zero."},
+{c:"Leis",q:"A driver under 21 in Florida is subject to license suspension at a blood alcohol level of:",o:["0.02% or higher","0.04% or higher","0.08% or higher","0.10% or higher"],a:0,e:"0.02% para menores de 21. É a lei de tolerância zero — uma única dose já basta."},
+{c:"Leis",q:"Refusing to submit to a breath test in Florida results in:",o:["No penalty","A warning only","A license suspension of one year for a first refusal","A fine only"],a:2,e:"Recusa implícita: a primeira recusa suspende a carteira por 1 ano. A segunda vira crime, além de 18 meses de suspensão."},
+{c:"Leis",q:"The only thing that reduces the alcohol level in your blood is:",o:["Coffee","A cold shower","Time","Food"],a:2,e:"Só o tempo. Café, banho frio e comida não aceleram a eliminação do álcool."},
+{c:"Leis",q:"Florida's open container law applies to:",o:["The driver only","The driver and all passengers","Passengers only","No one, if the car is parked"],a:1,e:"Recipiente aberto de bebida alcoólica é proibido tanto para o motorista quanto para os passageiros."},
+{c:"Leis",q:"Accumulating 12 points within 12 months in Florida results in a suspension of:",o:["30 days","3 months","6 months","1 year"],a:0,e:"12 pontos em 12 meses: 30 dias. 18 pontos em 18 meses: 3 meses. 24 pontos em 36 meses: 1 ano."},
+{c:"Leis",q:"You must report a crash to law enforcement when there is injury, death, or property damage of at least:",o:["$100","$250","$500","$1,000"],a:2,e:"Danos a partir de US$ 500, ou qualquer caso com feridos ou morte."},
+{c:"Leis",q:"Florida's minimum required insurance includes Personal Injury Protection (PIP) of:",o:["$5,000","$10,000","$25,000","$50,000"],a:1,e:"US$ 10.000 de PIP e US$ 10.000 de danos materiais (PDL) é o mínimo exigido na Flórida."},
+{c:"Leis",q:"Texting while driving in Florida is:",o:["Legal at red lights only","A primary offense — you can be stopped for it alone","A secondary offense only","Legal on residential streets"],a:1,e:"É infração primária. O policial pode parar você só por isso, sem precisar de outro motivo."},
+{c:"Leis",q:"Florida law requires seat belts for:",o:["The driver only","The driver and front-seat passengers, plus all passengers under 18","Front-seat passengers only","Everyone only on highways"],a:1,e:"Motorista e passageiros do banco da frente, mais todos os menores de 18 anos em qualquer assento."},
+{c:"Leis",q:"To pass the Florida vision test, your vision must be at least:",o:["20/20","20/40","20/60","20/100"],a:1,e:"20/40 em cada olho, com ou sem correção. Leve seus óculos ou lentes no dia."},
+{c:"Leis",q:"Leaving the scene of a crash involving injury is:",o:["A minor traffic ticket","A felony offense","Allowed if you leave a note","Allowed if you were not at fault"],a:1,e:"Fuga do local com vítima é crime grave (felony) na Flórida, com pena de prisão."},
+
+/* ===== EMERGÊNCIAS E VEÍCULOS ESPECIAIS ===== */
+{c:"Emergências",q:"An emergency vehicle with siren and lights approaches from behind. You should:",o:["Speed up to get out of the way","Stop immediately in your lane","Pull over to the closest edge of the road and stop","Move to the left lane and continue"],a:2,e:"Encoste à direita e pare, deixando a via livre. Parar na própria faixa bloqueia a passagem."},
+{c:"Emergências",q:"You approach a stopped emergency vehicle with flashing lights on a multi-lane road. You must first:",o:["Slow down only","Change to a non-adjacent lane if possible","Stop completely","Sound your horn"],a:1,e:"Move Over Law: mudar de faixa é a obrigação principal. Reduzir é o plano B, só quando mudar não é possível."},
+{c:"Emergências",q:"If you cannot change lanes for a stopped emergency vehicle and the speed limit is 55 mph, you must slow to:",o:["45 mph","35 mph","25 mph","5 mph"],a:1,e:"20 mph abaixo do limite. Se o limite for 20 mph ou menos, você vai a 5 mph."},
+{c:"Emergências",q:"A school bus stops with red lights flashing on a two-lane road with no median. You must:",o:["Slow to 20 mph and pass","Stop, no matter which direction you are traveling","Stop only if you are behind the bus","Proceed if no children are visible"],a:1,e:"Sem canteiro central, todos param, nos dois sentidos. É a regra que mais pega motorista estrangeiro."},
+{c:"Emergências",q:"On a divided highway with a raised median, a school bus stops on the other side. You:",o:["Must stop","Do not have to stop, but should stay alert","Must slow to 10 mph","Must change lanes"],a:1,e:"Com canteiro elevado ou faixa não pavimentada de pelo menos 1,5 m separando os sentidos, o tráfego contrário não precisa parar."},
+{c:"Emergências",q:"If your brakes fail while driving, you should:",o:["Turn off the engine immediately","Pump the brake pedal and apply the parking brake gradually","Steer into oncoming traffic","Open the door and jump out"],a:1,e:"Bombeie o pedal, use o freio de estacionamento aos poucos, reduza a marcha e procure um lugar seguro para parar."},
+{c:"Emergências",q:"If a tire blows out while driving, you should:",o:["Brake hard immediately","Grip the wheel firmly and ease off the accelerator","Turn sharply to the shoulder","Accelerate to regain control"],a:1,e:"Segure o volante com firmeza, tire o pé do acelerador e deixe o carro reduzir sozinho antes de encostar. Frear forte causa capotamento."},
+{c:"Emergências",q:"Your right wheels drop off the pavement onto a soft shoulder. You should:",o:["Steer back onto the road immediately","Brake hard","Ease off the gas, hold the wheel straight, then return gradually","Accelerate to climb back up"],a:2,e:"Correção brusca é a maior causa de capotamento nos EUA. Tire o pé, mantenha reto, reduza e só depois volte suavemente."},
+{c:"Emergências",q:"When driving in fog, you should use:",o:["High beams","Low beams","Hazard lights while moving","Parking lights"],a:1,e:"Farol baixo. O alto reflete na névoa e piora a visibilidade."},
+{c:"Emergências",q:"An oncoming car's high beams are blinding you. You should:",o:["Flash your own high beams","Look toward the right edge of the road","Close your eyes briefly","Speed up to pass sooner"],a:1,e:"Desvie o olhar para a borda direita da pista e use a linha branca como guia até o carro passar."},
+{c:"Emergências",q:"In Florida, you must turn on your headlights:",o:["Only after midnight","From sunset to sunrise and whenever your wipers are on due to rain","Only on highways","Only when visibility is under 100 feet"],a:1,e:"Do pôr do sol ao nascer do sol, e sempre que o limpador estiver ligado por causa de chuva."},
+{c:"Emergências",q:"If your car begins to skid, you should:",o:["Slam on the brakes","Steer in the direction you want the front of the car to go","Turn the wheel opposite to the skid","Accelerate hard"],a:1,e:"Tire o pé dos pedais e vire o volante para onde você quer que a frente do carro vá. Não trave os freios."},
+
+/* ===== MANOBRAS E ESTACIONAMENTO ===== */
+{c:"Manobras",q:"If a road is too narrow to make a U-turn, you may make:",o:["A two-point turn","A three-point turn","A four-point turn","A five-point turn"],a:1,e:"Three-point turn: frente, ré, frente. As outras opções não existem como termo oficial."},
+{c:"Manobras",q:"Before changing lanes, you should:",o:["Use your mirrors only","Check mirrors, signal, and look over your shoulder","Signal and change immediately","Sound your horn"],a:1,e:"Espelhos, seta, e olhada por cima do ombro para o ponto cego. Na prova prática, não olhar o ponto cego é falta."},
+{c:"Manobras",q:"You may not park within how many feet of a fire hydrant?",o:["5 feet","10 feet","15 feet","25 feet"],a:2,e:"15 pés do hidrante. Também: 20 pés de faixa de pedestres, 30 pés de placa de PARE ou semáforo, 50 pés de cruzamento ferroviário."},
+{c:"Manobras",q:"When parking uphill next to a curb, your front wheels should be turned:",o:["Toward the curb","Away from the curb","Straight ahead","It does not matter"],a:1,e:"Subida com meio-fio: rodas viradas para fora. Descida: rodas viradas para o meio-fio. Sem meio-fio: sempre para o acostamento."},
+{c:"Manobras",q:"At a railroad crossing with a stop required, you must stop no closer than:",o:["5 feet from the nearest rail","15 feet from the nearest rail","25 feet from the nearest rail","50 feet from the nearest rail"],a:1,e:"Entre 15 e 50 pés do trilho mais próximo. Nunca pare em cima dos trilhos."},
+{c:"Manobras",q:"You may turn right on a red light in Florida:",o:["Never","After coming to a complete stop, unless a sign prohibits it","Without stopping, if the way is clear","Only between 6 a.m. and 10 p.m."],a:1,e:"Permitido depois de parar completamente, salvo placa proibindo. Você também cede a pedestres e ao tráfego que vem."},
+{c:"Manobras",q:"You may turn left on a red light:",o:["Never","From a one-way street onto another one-way street, after stopping","At any intersection after stopping","Only with a green arrow"],a:1,e:"De mão única para mão única, depois de parar completamente e se não houver placa proibindo."},
+{c:"Manobras",q:"When parallel parking, your car should end up no more than how far from the curb?",o:["6 inches","12 inches","18 inches","24 inches"],a:1,e:"Até 12 polegadas (cerca de 30 cm) do meio-fio. Se a prova prática exigir baliza, esse é o critério."},
+{c:"Manobras",q:"A U-turn is prohibited:",o:["On any two-lane road","Where a sign prohibits it or where you cannot be seen by other drivers","Only in residential areas","Only at night"],a:1,e:"Proibido onde há placa, e em curvas ou lombadas onde outro motorista não consegue enxergar você a tempo."},
+{c:"Manobras",q:"When passing another vehicle, you should return to your lane when:",o:["You have cleared its front bumper","You can see both of its headlights in your rearview mirror","The other driver signals you","You have passed the halfway point"],a:1,e:"Enxergar os dois faróis do carro ultrapassado no seu retrovisor central significa que há espaço suficiente."},
+{c:"Manobras",q:"Passing on the right is permitted when:",o:["Never","The vehicle ahead is turning left and there is room without leaving the pavement","The road is clear","Traffic is heavy"],a:1,e:"Permitido quando o carro da frente vai virar à esquerda e há espaço na pista. Nunca usando o acostamento."},
+{c:"Manobras",q:"Backing up on a highway or expressway is:",o:["Allowed if you miss your exit","Never permitted","Allowed on the shoulder only","Allowed at low speed"],a:1,e:"Nunca dê ré em rodovia, nem no acostamento. Se perder a saída, siga até a próxima."}
+];
+
+const CATS = ["Todas","Preferência","Placas","Velocidade","Leis","Emergências","Manobras"];
+const LENS = [10, 20, 50, 0];
+
+let cat = "Todas", len = 20;
+let deck = [], idx = 0, misses = [], answered = false;
+const app = document.getElementById("app");
+
+const esc = s => s.replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const lenLabel = n => n === 0 ? "Tudo (" + BANK.length + ")" : n + " questões";
+
+function shuffle(arr){
+  const a = arr.slice();
+  for(let i = a.length - 1; i > 0; i--){
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function home(){
+  app.innerHTML = `
+    <h1>Simulado Class E</h1>
+    <p class="sub">Prova teórica da Flórida. Pergunta em inglês, explicação em português. As questões embaralham a cada rodada.</p>
+    <div class="field">
+      <div class="label">Assunto</div>
+      <div class="chips" id="cats"></div>
+    </div>
+    <div class="field">
+      <div class="label">Tamanho</div>
+      <div class="chips" id="lens"></div>
+    </div>
+    <button class="btn" id="go">Começar rodada</button>
+  `;
+  const cw = document.getElementById("cats");
+  CATS.forEach(c => {
+    const n = c === "Todas" ? BANK.length : BANK.filter(q => q.c === c).length;
+    const b = document.createElement("button");
+    b.className = "chip";
+    b.type = "button";
+    b.setAttribute("aria-pressed", c === cat);
+    b.textContent = c + " · " + n;
+    b.onclick = () => { cat = c; home(); };
+    cw.appendChild(b);
+  });
+  const lw = document.getElementById("lens");
+  LENS.forEach(n => {
+    const b = document.createElement("button");
+    b.className = "chip";
+    b.type = "button";
+    b.setAttribute("aria-pressed", n === len);
+    b.textContent = lenLabel(n);
+    b.onclick = () => { len = n; home(); };
+    lw.appendChild(b);
+  });
+  document.getElementById("go").onclick = start;
+}
+
+function start(){
+  const pool = cat === "Todas" ? BANK : BANK.filter(q => q.c === cat);
+  const size = len === 0 ? pool.length : Math.min(len, pool.length);
+  deck = shuffle(pool).slice(0, size).map(q => {
+    const order = shuffle(q.o.map((t, i) => ({t, i})));
+    return {q: q.q, c: q.c, e: q.e, s: q.s, opts: order.map(o => o.t), a: order.findIndex(o => o.i === q.a)};
+  });
+  idx = 0; misses = []; answered = false;
+  render();
+}
+
+function render(){
+  const item = deck[idx];
+  const pct = Math.round((idx / deck.length) * 100);
+  app.innerHTML = `
+    <div class="lane"><div class="lane-fill" style="width:${pct}%"></div></div>
+    <div class="meta"><span><b>${idx + 1}</b> de ${deck.length}</span><span>${esc(item.c)}</span></div>
+    ${item.s ? `<div class="sign">${SIGNS[item.s]}</div>` : ""}
+    <div class="panel"><div class="panel-inner">
+      <div class="tag">Escolha uma alternativa</div>
+      <p class="q">${esc(item.q)}</p>
+    </div></div>
+    <div id="opts"></div>
+    <div id="after"></div>
+  `;
+  const ow = document.getElementById("opts");
+  item.opts.forEach((t, i) => {
+    const b = document.createElement("button");
+    b.className = "opt";
+    b.type = "button";
+    b.textContent = t;
+    b.onclick = () => choose(i);
+    ow.appendChild(b);
+  });
+}
+
+function choose(i){
+  if(answered) return;
+  answered = true;
+  const item = deck[idx];
+  const ok = i === item.a;
+  if(!ok) misses.push({q: item.q, right: item.opts[item.a], e: item.e});
+  [...document.querySelectorAll(".opt")].forEach((b, n) => {
+    b.disabled = true;
+    if(n === item.a) b.classList.add("right");
+    else if(n === i) b.classList.add("wrong");
+    else b.classList.add("dim");
+  });
+  const last = idx === deck.length - 1;
+  document.getElementById("after").innerHTML = `
+    <div class="exp">
+      <div class="verdict ${ok ? "ok" : "no"}">${ok ? "Correto." : "Não é essa."}</div>
+      <p>${esc(item.e)}</p>
+    </div>
+    <button class="btn" id="next">${last ? "Ver resultado" : "Próxima"}</button>
+  `;
+  const nb = document.getElementById("next");
+  nb.focus();
+  nb.onclick = () => {
+    if(last) return result();
+    idx++; answered = false; render();
+  };
+}
+
+function result(){
+  const right = deck.length - misses.length;
+  const pct = Math.round((right / deck.length) * 100);
+  const pass = pct >= 80;
+  app.innerHTML = `
+    <div class="lane"><div class="lane-fill" style="width:100%"></div></div>
+    <div class="meta"><span>Rodada concluída</span><span>${esc(cat)}</span></div>
+    <p class="score ${pass ? "pass" : "fail"}">${pct}%</p>
+    <p class="verdict-big">${right} de ${deck.length} — ${pass ? "acima da nota de corte" : "abaixo da nota de corte de 80%"}</p>
+    <div class="actions">
+      <button class="btn" id="again">Nova rodada</button>
+      <button class="btn ghost" id="back">Mudar assunto</button>
+    </div>
+    <div id="rev"></div>
+  `;
+  if(misses.length){
+    const r = document.createElement("div");
+    r.className = "review";
+    r.innerHTML = "<h2>Para revisar</h2>";
+    misses.forEach(m => {
+      const d = document.createElement("div");
+      d.className = "miss";
+      d.innerHTML = `<p class="mq">${esc(m.q)}</p><p class="ma">${esc(m.right)}</p><p class="me">${esc(m.e)}</p>`;
+      r.appendChild(d);
+    });
+    document.getElementById("rev").appendChild(r);
+  }
+  document.getElementById("again").onclick = start;
+  document.getElementById("back").onclick = home;
+}
+
+home();
+</script>
