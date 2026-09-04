@@ -291,9 +291,9 @@ const BANK = [
 {c:"Velocidade",q:"A \"No Zone\" is:",o:["An area where parking is banned","The blind spot area around a large truck or bus where the driver cannot see you","A school zone","A construction area"],a:1,e:"Quanto maior o veículo, maiores os pontos cegos. Se você não enxerga os espelhos do caminhão, o motorista não enxerga você.",ref:82},
 
 /* ===== LEIS, DOCUMENTOS E ÁLCOOL ===== */
-{c:"Leis",q:"In Florida, a driver 21 or older is legally impaired at a blood alcohol level of:",o:["0.02% or higher","0.05% or higher","0.08% or higher","0.10% or higher"],a:2,e:"0.08% para maiores de 21. Para menores de 21 o limite é 0.02%, praticamente zero.",ref:25},
-{c:"Leis",q:"Under Florida's Implied Consent Law, by signing your driver license you have agreed to:",o:["Take a breath, blood or urine test when lawfully requested","Never drink alcohol","Allow your car to be searched at any time","Carry your license at all times"],a:0,e:"Recusar o teste tem penalidade própria: a primeira recusa suspende a habilitação por 1 ano.",ref:25},
-{c:"Leis",q:"After drinking alcohol, which is affected first?",o:["Your vision","Your judgment","Your hearing","Your reaction time"],a:1,e:"O julgamento é o primeiro a ser afetado — por isso a pessoa se acha capaz de dirigir quando já não está.",ref:35},
+{c:"Álcool e drogas",q:"In Florida, a driver 21 or older is legally impaired at a blood alcohol level of:",o:["0.02% or higher","0.05% or higher","0.08% or higher","0.10% or higher"],a:2,e:"0.08% para maiores de 21. Para menores de 21 o limite é 0.02%, praticamente zero.",ref:25},
+{c:"Álcool e drogas",q:"Under Florida's Implied Consent Law, by signing your driver license you have agreed to:",o:["Take a breath, blood or urine test when lawfully requested","Never drink alcohol","Allow your car to be searched at any time","Carry your license at all times"],a:0,e:"Recusar o teste tem penalidade própria: a primeira recusa suspende a habilitação por 1 ano.",ref:25},
+{c:"Álcool e drogas",q:"After drinking alcohol, which is affected first?",o:["Your vision","Your judgment","Your hearing","Your reaction time"],a:1,e:"O julgamento é o primeiro a ser afetado — por isso a pessoa se acha capaz de dirigir quando já não está.",ref:35},
 {c:"Leis",q:"The three main categories of driver distraction are:",o:["Visual, manual and cognitive","Loud, quiet and sudden","Legal, illegal and risky","Internal, external and mechanical"],a:0,e:"Visual é tirar os olhos da via, manual é tirar as mãos do volante, cognitiva é pensar em outra coisa. Digitar mensagens envolve as três ao mesmo tempo.",ref:34},
 {c:"Leis",q:"Florida's No-Fault Law requires vehicle owners to carry a minimum of:",o:["$5,000 PIP and $5,000 PDL","$10,000 PIP and $10,000 PDL","$25,000 PIP only","$50,000 PDL only"],a:1,e:"US$ 10.000 de Personal Injury Protection e US$ 10.000 de Property Damage Liability, mantidos durante todo o período de registro.",ref:23},
 {c:"Leis",q:"Children under age 4 must ride in:",o:["A separate carrier or child safety seat","A booster seat","A regular safety belt","The back seat with no restraint"],a:0,e:"Menores de 4 anos usam cadeirinha. Aos 4 e 5 anos, cadeirinha ou assento de elevação.",ref:27},
@@ -306,6 +306,47 @@ const BANK = [
 {c:"Leis",q:"Are you required to notify FLHSMV of health problems that may affect your driving?",o:["Yes","No","Only if you are over 65","Only for vision problems"],a:0,e:"É sua obrigação informar. Omitir pode invalidar sua habilitação.",ref:9},
 {c:"Leis",q:"You must report a crash to law enforcement when there is injury, death, or property damage of at least:",o:["$100","$250","$500","$1,000"],a:2,e:"A partir de US$ 500 em danos, ou qualquer caso com feridos ou morte.",ref:77},
 {c:"Leis",q:"You hit a parked car and cannot find the owner. You must:",o:["Drive away if the damage is small","Leave a note with your name and address and report the crash","Wait one hour and then leave","Call your insurance only"],a:1,e:"Deixe um bilhete com nome e endereço em local visível e comunique a ocorrência. Sair sem isso configura fuga do local.",ref:77},
+
+/* ===== ÁLCOOL, DROGAS E PENALIDADES ===== */
+{c:"Álcool e drogas",q:"You can be charged with DUI in Florida for driving under the influence of:",o:["Alcoholic beverages only","Alcohol, controlled substances, prescriptions or over-the-counter medications","Illegal drugs only","Alcohol and marijuana only"],a:1,e:"Remédio de farmácia conta. Antialérgico e antigripal comum podem configurar DUI se prejudicarem sua condução.",ref:25},
+{c:"Álcool e drogas",q:"You can be charged with DUI even if the car is not moving, when you are:",o:["In actual physical control of the vehicle","Sitting in the back seat","A passenger","Standing next to the car"],a:0,e:"Estar no controle físico do veículo basta. Dormir no banco do motorista com a chave ao alcance já expõe você à autuação.",ref:25},
+{c:"Álcool e drogas",q:"At the time of a DUI arrest, your license is administratively suspended if your breath or blood alcohol level is:",o:[".02 or higher",".05 or higher",".08 or higher",".15 or higher"],a:2,e:"A suspensão é administrativa e acontece na hora da prisão, antes de qualquer julgamento.",ref:25},
+{c:"Álcool e drogas",q:"A first refusal to submit to a breath, blood or urine test results in an automatic license suspension of:",o:["90 days","6 months","One year","18 months"],a:2,e:"Recusar não evita a punição: a suspensão é automática por um ano.",ref:26},
+{c:"Álcool e drogas",q:"A second refusal to submit to testing results in:",o:["A warning","An 18-month suspension and a first degree misdemeanor","A one-year suspension only","A fine of $200"],a:1,e:"A segunda recusa deixa de ser só administrativa e vira crime de menor potencial.",ref:26},
+{c:"Álcool e drogas",q:"In a DUI case involving death or serious injury, a blood test:",o:["Requires your written consent","Will be required with or without your consent","Cannot be performed","Is optional"],a:1,e:"O sangue deve ser colhido por médico, enfermeiro ou outro profissional de saúde, e pode ser colhido mesmo com você inconsciente.",ref:26},
+{c:"Álcool e drogas",q:"The fine for a first DUI conviction, with no aggravating factors, is:",o:["$100–$250","$500–$1,000","$2,000–$5,000","$10,000"],a:1,e:"Com BAL de .15 ou mais, ou menor de idade no carro, a multa sobe para entre US$ 1.000 e US$ 2.000.",ref:26},
+{c:"Álcool e drogas",q:"A first DUI conviction includes community service of:",o:["10 hours","25 hours","50 hours","100 hours"],a:2,e:"São 50 horas, além de multa, possível prisão, revogação da habilitação e DUI School.",ref:26},
+{c:"Álcool e drogas",q:"The minimum license revocation for a first DUI conviction is:",o:["30 days","90 days","180 days","One year"],a:2,e:"Mínimo de 180 dias, e vale igualmente para a segunda e a terceira condenação.",ref:26},
+{c:"Álcool e drogas",q:"A first DUI conviction requires DUI School of:",o:["4 hours","12 hours","21 hours","40 hours"],a:1,e:"12 horas na primeira condenação e 21 horas a partir da segunda, mais avaliação sobre necessidade de tratamento.",ref:26},
+{c:"Álcool e drogas",q:"Imprisonment for a first DUI conviction, with no aggravating factors, is:",o:["Not more than 6 months","Not more than 12 months","Not more than 30 days","Never applicable"],a:0,e:"Sobe para até 9 meses se o BAL for .15 ou mais, ou se houver menor de idade no veículo.",ref:26},
+{c:"Álcool e drogas",q:"After a second DUI conviction, an ignition interlock device is required for at least:",o:["30 days","6 months","One continuous year","Two continuous years"],a:2,e:"Um ano contínuo na segunda condenação e pelo menos dois anos na terceira.",ref:26},
+{c:"Álcool e drogas",q:"The fine for a third DUI conviction is:",o:["$500–$1,000","$1,000–$2,000","$2,000–$5,000","$5,000–$10,000"],a:2,e:"E não menos de US$ 4.000 se o BAL for .15 ou superior ou houver menor no carro. A prisão pode chegar a 12 meses.",ref:26},
+{c:"Álcool e drogas",q:"Under Florida's Zero Tolerance law, a driver under 21 stopped with a BAL of .02 or higher will:",o:["Receive a warning","Automatically have their driving privilege suspended for six months","Pay a $100 fine","Lose their license permanently"],a:1,e:"Uma única dose pode levar a esse nível. Os pais ou responsáveis são notificados do resultado.",ref:26},
+{c:"Álcool e drogas",q:"A driver under 21 with a BAL of .05 or higher is required to:",o:["Attend a substance abuse course","Pay double the fine","Serve 30 days in jail","Retake the driving test"],a:0,e:"Além da suspensão, entra a obrigação do curso e uma avaliação, com notificação aos responsáveis.",ref:26},
+{c:"Álcool e drogas",q:"Driving while impaired by drugs in Florida is:",o:["A lesser offense than alcohol impairment","Subject to the same penalties as driving impaired by alcohol","Only illegal for controlled substances","Legal with a prescription"],a:1,e:"Receita médica não é defesa. O que importa é se a substância prejudicou sua capacidade de dirigir.",ref:36},
+{c:"Álcool e drogas",q:"Mixing alcohol with allergy or cold medication:",o:["Cancels out the effects of both","Often multiplies the effects of the alcohol and the drug","Has no effect","Only affects drivers over 40"],a:1,e:"Uma dose combinada com um antialérgico pode ter o efeito de várias doses.",ref:36},
+{c:"Álcool e drogas",q:"Before driving after taking any medication, you should:",o:["Drink coffee","Check the label for warnings, and ask a doctor or pharmacist if unsure","Wait 15 minutes","Drive slower than usual"],a:1,e:"Muitos remédios de venda livre causam sonolência ou lentidão de reflexos sem que você perceba.",ref:36},
+{c:"Álcool e drogas",q:"Another driver is tailgating you, honking and making threatening gestures. You should:",o:["Brake to teach them a lesson","Stay calm, slow down, let them pass and avoid eye contact","Make gestures back","Speed up to escape"],a:1,e:"Coloque o máximo de distância possível. Não faça contato visual e, se persistir, dirija até um local movimentado e chame a polícia.",ref:36},
+{c:"Álcool e drogas",q:"The only thing that reduces the alcohol level in your blood is:",o:["Coffee","A cold shower","Time","Food"],a:2,e:"Café, banho frio e comida não aceleram a eliminação. Só o tempo.",ref:35},
+
+/* ===== EQUIPAMENTO E INSPEÇÃO DO VEÍCULO ===== */
+{c:"Veículo",q:"In Florida, your vehicle:",o:["Is inspected once a year by the state","May be stopped at any time by law enforcement for a vehicle inspection","Is never inspected","Is only inspected when sold"],a:1,e:"Não há inspeção anual obrigatória, mas o equipamento deve atender aos padrões e pode ser verificado a qualquer momento.",ref:38},
+{c:"Veículo",q:"Florida requires your car to have:",o:["One braking system","Two braking systems, each able to stop the car alone","Three braking systems","Only a parking brake"],a:1,e:"E o freio de estacionamento precisa ser forte o bastante para segurar o carro em qualquer ladeira.",ref:38},
+{c:"Veículo",q:"Low beam headlights must show objects at least:",o:["100 feet ahead","150 feet ahead","300 feet ahead","450 feet ahead"],a:1,e:"Farol baixo mostra 150 pés à frente e o alto, 450 pés. Ambos devem ser visíveis a 1.000 pés.",ref:38},
+{c:"Veículo",q:"Your horn must be able to be heard from a distance of:",o:["50 feet","100 feet","200 feet","500 feet"],a:2,e:"200 pés. A buzina serve para alertar, não para expressar irritação.",ref:38},
+{c:"Veículo",q:"Your vehicle must have at least one rear-view mirror giving a view of:",o:["50 feet to the rear","100 feet to the rear","200 feet to the rear","500 feet to the rear"],a:2,e:"200 pés para trás. Espelho não cobre o ponto cego, então continue olhando por cima do ombro.",ref:38},
+{c:"Veículo",q:"Tires must have a minimum tread depth of at least:",o:["1/32 of an inch","2/32 of an inch","3/32 of an inch","5/32 of an inch"],a:2,e:"3/32 de polegada, e sem áreas gastas expondo a lona. Pneu careca é a principal causa de aquaplanagem.",ref:38},
+{c:"Veículo",q:"Side windows may not be treated with any material that reflects more than:",o:["15% of the light","25% of the light","35% of the light","50% of the light"],a:1,e:"25% nas laterais e 35% no vidro traseiro. O para-brisa não pode ser refletivo nem opaco.",ref:38},
+{c:"Veículo",q:"Your windshield must be safety glass and:",o:["May carry any sticker you like","Must be free of stickers not required by law","May be tinted to any degree","May be replaced with plastic"],a:1,e:"Placa de estacionamento, adesivo de faculdade ou enfeite pendurado podem render autuação.",ref:38},
+{c:"Veículo",q:"Which of these is NOT permitted on a private vehicle in Florida?",o:["Amber directional signals","A siren, bell or whistle","Two headlights","A rear-view mirror"],a:1,e:"Sirenes, sinos e apitos são exclusivos de veículos de emergência, assim como luzes azuis e luzes vermelhas visíveis pela frente.",ref:38},
+{c:"Veículo",q:"A muffler on your vehicle may not:",o:["Be made of steel","Be heard from more than 50 feet away or emit smoke","Be replaced","Be repaired"],a:1,e:"Escapamento barulhento demais ou fumegante é infração de equipamento.",ref:38},
+{c:"Veículo",q:"While driving in Florida, it is illegal to:",o:["Listen to the radio","Wear headsets or headphones","Use the air conditioning","Drive with a passenger"],a:1,e:"Fones bloqueiam sons do trânsito. Também é proibido um televisor visível para o motorista.",ref:39},
+{c:"Veículo",q:"Bumper height limits in Florida are governed by:",o:["The net shipping weight of the vehicle","The modified or altered weight","The age of the vehicle","The number of passengers"],a:0,e:"O peso de fábrica, não o peso depois de modificações. E os limites não são iguais para todos os veículos.",ref:41},
+{c:"Veículo",q:"Tampering with or removing a pollution control device on your vehicle is:",o:["Legal if it improves performance","Illegal","Allowed on older cars","Required for inspection"],a:1,e:"Além de ilegal, prejudica o próprio carro: mais poluição, menos rendimento e menos eficiência.",ref:41},
+{c:"Veículo",q:"Air bags are:",o:["A replacement for safety belts","Designed to work together with safety belts, not replace them","Only useful in rear-end crashes","Optional equipment in Florida"],a:1,e:"O airbag foi projetado para atuar junto com o cinto. Sem cinto, ele pode até agravar o trauma.",ref:39},
+{c:"Veículo",q:"A backup camera:",o:["Replaces the need to use mirrors or look behind you","Helps prevent backover crashes but does not replace mirrors and turning to look","Is required by Florida law","Works only at night"],a:1,e:"A câmera tem ângulo limitado. Na prova prática, dar ré olhando só a tela costuma contar como falta.",ref:40},
+{c:"Veículo",q:"A load projecting more than four feet beyond the rear of your vehicle must be marked during the day with:",o:["A white flag","Red flags at least 18 inches square","An orange cone","Nothing"],a:1,e:"Bandeiras vermelhas de pelo menos 18 polegadas de lado. À noite, e com chuva, fumaça ou neblina, duas luzes vermelhas visíveis a 500 pés.",ref:42},
+{c:"Veículo",q:"A towing connection made of chain, rope or cable must have:",o:["No marking","A white flag at least 12 inches square attached to it","A red light","A reflective triangle"],a:1,e:"E a barra de reboque não pode ter mais de 15 pés, salvo no transporte de postes, canos ou máquinas que não se desmontam.",ref:42},
 
 /* ===== EMERGÊNCIAS E VEÍCULOS ESPECIAIS ===== */
 {c:"Emergências",q:"An emergency vehicle with siren and lights approaches from behind. You should:",o:["Speed up to get out of the way","Stop immediately in your lane","Pull over to the closest edge of the road and stop","Move to the left lane and continue"],a:2,e:"Encoste na borda mais próxima e pare até o veículo passar. Não entre num cruzamento onde você atrapalharia a passagem.",ref:84},
@@ -339,21 +380,58 @@ const BANK = [
 {c:"Manobras",q:"To make a smooth stop, you should:",o:["Brake hard as late as possible","Check mirrors and blind spots, release the accelerator, then brake gradually","Shift into neutral and coast","Pump the brakes rapidly"],a:1,e:"Paradas bruscas dificultam a reação de quem vem atrás e causam colisão traseira.",ref:68},
 {c:"Manobras",q:"Backing up on a highway or expressway is:",o:["Allowed if you miss your exit","Never permitted","Allowed on the shoulder only","Allowed at low speed"],a:1,e:"Nunca dê ré em rodovia, nem no acostamento.",ref:64},
 {c:"Manobras",q:"Before you start the engine, you should adjust:",o:["Only the radio","Your seat, mirrors and head restraint, and fasten your safety belt","Only the air conditioning","Nothing; adjust while driving"],a:1,e:"Tudo o que exige atenção deve ser ajustado com o carro parado.",ref:59},
-{c:"Manobras",q:"If you are hauling a load of material that could fall or blow onto the roadway, you must:",o:["Drive below 40 mph","Cover and secure the load so nothing escapes","Use hazard lights","Drive only at night"],a:1,e:"Carga solta na pista é infração e causa acidentes graves atrás de você.",ref:42},
-{c:"Manobras",q:"A load that extends more than four feet beyond your vehicle must be marked with:",o:["A red flag in the daytime and a red light at night","A white flag at all times","Nothing, if under six feet","An orange triangle only"],a:0,e:"Bandeira vermelha de dia e luz vermelha à noite, visível de trás.",ref:42},
-{c:"Manobras",q:"When emergency braking with anti-lock brakes (ABS), you should:",o:["Pump the brake pedal","Apply firm, steady pressure and keep steering","Release the brake repeatedly","Use the parking brake"],a:1,e:"Com ABS, pressão firme e contínua, sem bombear — o sistema pulsa sozinho. Sem ABS, aí sim você bombeia para não travar as rodas.",ref:78}
+{c:"Veículo",q:"If you are hauling a load of material that could fall or blow onto the roadway, you must:",o:["Drive below 40 mph","Cover and secure the load so nothing escapes","Use hazard lights","Drive only at night"],a:1,e:"Carga solta na pista é infração e causa acidentes graves atrás de você.",ref:42},
+{c:"Veículo",q:"A load that extends more than four feet beyond your vehicle must be marked with:",o:["A red flag in the daytime and a red light at night","A white flag at all times","Nothing, if under six feet","An orange triangle only"],a:0,e:"Bandeira vermelha de dia e luz vermelha à noite, visível de trás.",ref:42},
+{c:"Veículo",q:"When emergency braking with anti-lock brakes (ABS), you should:",o:["Pump the brake pedal","Apply firm, steady pressure and keep steering","Release the brake repeatedly","Use the parking brake"],a:1,e:"Com ABS, pressão firme e contínua, sem bombear — o sistema pulsa sozinho. Sem ABS, aí sim você bombeia para não travar as rodas.",ref:78}
 ];
 
-const CATS = ["Todas","Placas","Formatos","Preferência","Velocidade","Leis","Emergências","Manobras"];
+const CATS = ["Todas","Placas","Formatos","Preferência","Velocidade","Leis","Álcool e drogas","Veículo","Emergências","Manobras"];
+const SIGN_CATS = ["Placas","Formatos"];
 const MODES = [
-  {label:"Treino · 10",              n:10, max:null},
-  {label:"Treino · 20",              n:20, max:null},
+  {label:"Treino · 10",              n:10, max:null, smart:true},
+  {label:"Treino · 20",              n:20, max:null, smart:true},
+  {label:"Meus erros",               n:20, max:null, only:"wrong"},
   {label:"Prova · 20 (4 erros)",     n:20, max:4},
   {label:"Prova oficial · 50 (10 erros)", n:50, max:10, mix:true},
   {label:"Tudo",                     n:0,  max:null}
 ];
-let cat = "Todas", mode = 2;
+let cat = "Todas", mode = 4;
 let deck = [], idx = 0, misses = [], answered = false, failedEarly = false;
+
+/* ---------- memória de desempenho (fica só neste navegador) ---------- */
+const KEY = "simulado-fl-v1";
+const qid = q => (q.pic || "") + "|" + q.q;
+let stats = {};
+function loadStats(){
+  try { stats = JSON.parse(localStorage.getItem(KEY)) || {}; }
+  catch(e){ stats = {}; }
+}
+function saveStats(){
+  try { localStorage.setItem(KEY, JSON.stringify(stats)); } catch(e){}
+}
+function record(q, ok){
+  const k = qid(q);
+  const r = stats[k] || {s:0, w:0};
+  r.s++; if(!ok) r.w++; else if(r.w > 0) r.w--;   // acertar reduz a dívida aos poucos
+  stats[k] = r; saveStats();
+}
+const pending = () => BANK.filter(q => (stats[qid(q)] || {}).w > 0);
+function weightOf(q){
+  const r = stats[qid(q)];
+  if(!r) return 3;          // nunca vista
+  if(r.w > 0) return 8;     // errada e ainda não recuperada
+  return r.s >= 2 ? 1 : 2;  // já dominada
+}
+function weightedPick(pool, n){
+  const src = pool.slice(); const out = [];
+  while(out.length < n && src.length){
+    const w = src.map(weightOf);
+    let r = Math.random() * w.reduce((a,b) => a+b, 0), i = 0;
+    while(r > w[i]){ r -= w[i]; i++; }
+    out.push(src.splice(i,1)[0]);
+  }
+  return out;
+}
 const app = document.getElementById("app");
 
 const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
@@ -379,6 +457,7 @@ function home(){
     <div class="field"><div class="label">Assunto</div><div class="chips" id="cats"></div></div>
     <div class="field"><div class="label">Modo</div><div class="chips" id="lens"></div></div>
     <button class="btn" id="go">Começar rodada</button>
+    <div id="prog"></div>
     <p class="foot">Questões escritas a partir do Official Florida Class E Driver License Handbook (rev. 08/2023) e do guia oficial de estudo da FLHSMV. Não são as perguntas literais da prova, que não são públicas. Imagens das placas extraídas do manual, uma publicação do governo da Flórida.</p>`;
   const cw = document.getElementById("cats");
   CATS.forEach(c => {
@@ -400,20 +479,50 @@ function home(){
     lw.appendChild(b);
   });
   document.getElementById("go").onclick = start;
+
+  const seen = BANK.filter(q => stats[qid(q)]).length;
+  const bad = pending().length;
+  const pw = document.getElementById("prog");
+  if(seen){
+    pw.className = "review";
+    pw.innerHTML = `<h2>Seu progresso</h2>
+      <p style="margin:0 0 4px">${seen} de ${BANK.length} questões já respondidas.
+      ${bad ? `<strong>${bad}</strong> ainda com erro pendente.` : "Nenhum erro pendente."}</p>
+      <p class="foot" style="margin:6px 0 0;border:0;padding:0">Os modos de treino sorteiam mais as questões que você erra.
+      O progresso fica salvo só neste navegador.</p>
+      <button class="btn ghost" id="reset" style="margin-top:12px">Zerar progresso</button>`;
+    document.getElementById("reset").onclick = () => {
+      if(confirm("Apagar todo o histórico de acertos e erros?")){ stats = {}; saveStats(); home(); }
+    };
+  }
+}
+function noPending(){
+  app.innerHTML = `<h1>Nenhum erro pendente</h1>
+    <p class="sub">Você ainda não errou nada neste filtro, ou já recuperou tudo. Faça uma rodada de treino ou uma prova para gerar material de revisão.</p>
+    <button class="btn" id="back">Voltar</button>`;
+  document.getElementById("back").onclick = home;
 }
 
 function start(){
   const m = curMode();
-  const pool = cat === "Todas" ? BANK : BANK.filter(q => q.c === cat);
+  let pool = cat === "Todas" ? BANK : BANK.filter(q => q.c === cat);
+  if(m.only === "wrong"){
+    pool = pending().filter(q => cat === "Todas" || q.c === cat);
+    if(!pool.length){ noPending(); return; }
+  }
   let picked;
   if(m.mix && cat === "Todas"){
-    // prova oficial: 10 de placas + 40 de regras, como na FLHSMV
-    const signs = shuffle(BANK.filter(q => q.c === "Placas" || q.c === "Formatos")).slice(0,10);
-    const rules = shuffle(BANK.filter(q => q.c !== "Placas" && q.c !== "Formatos")).slice(0,40);
-    picked = shuffle(signs.concat(rules));
+    // proporção da FLHSMV: placas 20%, álcool 15%, equipamento 15%, demais regras 50%
+    const take = (f,n) => shuffle(BANK.filter(f)).slice(0,n);
+    picked = shuffle([].concat(
+      take(q => SIGN_CATS.includes(q.c), 10),
+      take(q => q.c === "Álcool e drogas", 8),
+      take(q => q.c === "Veículo", 8),
+      take(q => !SIGN_CATS.includes(q.c) && q.c !== "Álcool e drogas" && q.c !== "Veículo", 24)
+    ));
   } else {
     const size = m.n === 0 ? pool.length : Math.min(m.n, pool.length);
-    picked = shuffle(pool).slice(0, size);
+    picked = m.smart ? weightedPick(pool, size) : shuffle(pool).slice(0, size);
   }
   deck = picked.map(q => {
     const order = shuffle(q.o.map((t,i) => ({t,i})));
@@ -454,6 +563,7 @@ function choose(i){
   answered = true;
   const item = deck[idx];
   const ok = i === item.a;
+  record(item, ok);
   if(!ok) misses.push({q:item.q, right:item.opts[item.a], e:item.e, ref:item.ref});
   [...document.querySelectorAll(".opt")].forEach((b,n) => {
     b.disabled = true;
@@ -513,5 +623,6 @@ function result(){
   window.scrollTo(0,0);
 }
 
+loadStats();
 home();
 </script>
