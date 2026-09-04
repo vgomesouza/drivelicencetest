@@ -159,6 +159,25 @@ crossbuck: svg(`<g transform="rotate(45 50 50)"><rect x="10" y="42" width="80" h
   <text x="50" y="54" text-anchor="middle" fill="#1A1D21" font-size="11" style="${F}">CROSSING</text></g>`)
 };
 
+/* silhuetas sem texto: reconhecimento só por forma e cor */
+const sil = i => `<svg viewBox="0 0 100 100" role="img" aria-label="Silhueta de placa">${i}</svg>`;
+Object.assign(SVGS, {
+  sh_octagon: sil(`<polygon points="30,3 70,3 97,30 97,70 70,97 30,97 3,70 3,30" fill="#C0261E"/>
+    <polygon points="31.5,7 68.5,7 93,31.5 93,68.5 68.5,93 31.5,93 7,68.5 7,31.5" fill="none" stroke="#fff" stroke-width="3.5"/>`),
+  sh_triangle: sil(`<polygon points="4,12 96,12 50,93" fill="#C0261E"/><polygon points="17,20 83,20 50,78" fill="#fff"/>`),
+  sh_diamond: sil(`<polygon points="50,2 98,50 50,98 2,50" fill="#F5C518" stroke="#1A1D21" stroke-width="3"/>`),
+  sh_diamond_orange: sil(`<polygon points="50,2 98,50 50,98 2,50" fill="#E8751A" stroke="#1A1D21" stroke-width="3"/>`),
+  sh_pentagon: sil(`<polygon points="50,3 97,31 97,97 3,97 3,31" fill="#C6E600" stroke="#1A1D21" stroke-width="3.5" stroke-linejoin="round"/>`),
+  sh_pennant: sil(`<polygon points="4,8 96,50 4,92" fill="#F5C518" stroke="#1A1D21" stroke-width="3" stroke-linejoin="round"/>`),
+  sh_circle: sil(`<circle cx="50" cy="50" r="46" fill="#F5C518" stroke="#1A1D21" stroke-width="3"/>`),
+  sh_cross: sil(`<g transform="rotate(45 50 50)"><rect x="10" y="42" width="80" height="16" fill="#fff" stroke="#1A1D21" stroke-width="2.5"/></g>
+    <g transform="rotate(-45 50 50)"><rect x="10" y="42" width="80" height="16" fill="#fff" stroke="#1A1D21" stroke-width="2.5"/></g>`),
+  sh_vrect: sil(`<rect x="18" y="4" width="64" height="92" rx="4" fill="#fff" stroke="#1A1D21" stroke-width="3"/>
+    <rect x="24" y="10" width="52" height="80" rx="2" fill="none" stroke="#1A1D21" stroke-width="2"/>`),
+  sh_hrect: sil(`<rect x="2" y="24" width="96" height="52" rx="4" fill="#14653F" stroke="#fff" stroke-width="3"/>
+    <rect x="8" y="30" width="84" height="40" rx="2" fill="none" stroke="#fff" stroke-width="2"/>`)
+});
+
 /* ---------- banco de questões ----------
    pic: nome da placa (IMG) ou do diagrama (SVGS)
    ref: página do Official Florida Class E Driver License Handbook (rev. 08/2023) */
@@ -232,6 +251,28 @@ const BANK = [
 {c:"Placas",pic:"centerturn",q:"The center lane marked like this is:",o:["A passing lane","A two-way left turn lane","A carpool lane","A bus-only lane"],a:1,e:"Faixa central compartilhada, exclusiva para conversão à esquerda. Não trafegue nem ultrapasse por ela.",ref:44},
 {c:"Placas",q:"You see red reflectors facing you on the lane lines. This means:",o:["A rest area is ahead","You are going the wrong way; pull over and turn around","The lane is closed for repairs","A toll booth is ahead"],a:1,e:"Os refletores voltados para você são vermelhos apenas quando você está na contramão. Saia da via com segurança e retorne.",ref:69},
 
+/* ===== FORMATOS DAS PLACAS ===== */
+{c:"Formatos",pic:"sh_octagon",q:"Which shape is used for one type of sign only, so you can recognize it even with no words visible?",o:["The diamond","The octagon","The rectangle","The circle"],a:1,e:"O octógono é exclusivo do STOP. Nenhuma outra placa nos EUA tem oito lados, e por isso ele é reconhecível pela silhueta.",ref:47},
+{c:"Formatos",pic:"stop",q:"The eight-sided shape of this sign is reserved for:",o:["Stop signs","Yield signs","Warning signs","Guide signs"],a:0,e:"Se você vir um octógono, é PARE, mesmo sem conseguir ler a palavra.",ref:47},
+{c:"Formatos",pic:"yield",q:"A downward-pointing triangle is used only for:",o:["Stop signs","Yield signs","School signs","No-passing signs"],a:1,e:"Triângulo invertido é sempre YIELD: reduza e ceda, parando somente se necessário.",ref:47},
+{c:"Formatos",pic:"sh_diamond",q:"A sign of this shape and color tells you that:",o:["You must stop","There is a hazard or a change in the road ahead","You are entering a school zone","Passing is prohibited"],a:1,e:"Losango é advertência. Em amarelo é condição da via em geral; em laranja, zona de obras.",ref:49},
+{c:"Formatos",pic:"sh_pentagon",q:"A sign of this shape is used for:",o:["Railroad crossings","School zones and school crossings","Hospital zones","No-passing zones"],a:1,e:"O pentágono, em amarelo-limão fluorescente, marca zona ou travessia escolar.",ref:46},
+{c:"Formatos",pic:"school",q:"The five-sided shape and the fluorescent yellow-green color together signal:",o:["A construction zone","High emphasis warning of school, pedestrian or bicycling activity","A recreation area","An emergency route"],a:1,e:"O handbook reserva essa cor para advertência de alta ênfase sobre escola, pedestres e ciclistas.",ref:46},
+{c:"Formatos",pic:"nopassing",q:"A sign shaped like a horizontal triangle pointing right, posted on the left side of the road, means:",o:["Merge right","You are in a no-passing zone","A sharp curve ahead","One-way street"],a:1,e:"A flâmula é o único formato posicionado à esquerda da pista, justamente para você não confundi-la com outra placa.",ref:48},
+{c:"Formatos",pic:"rxr",q:"A round sign is used almost exclusively to warn of:",o:["A roundabout","A railroad crossing ahead","A hospital","A dead end"],a:1,e:"O círculo amarelo com R X R é o aviso antecipado de passagem de nível, quase sempre a primeira placa que você vê.",ref:56},
+{c:"Formatos",pic:"crossbuck",q:"The X-shaped sign at a railroad crossing has the same legal weight as:",o:["A stop sign","A yield sign","A speed limit sign","A warning sign only"],a:1,e:"O handbook é explícito: crossbucks são placas de YIELD. Você cede a passagem ao trem.",ref:56},
+{c:"Formatos",pic:"speedlimit",q:"A vertical rectangle with black letters on a white background is normally:",o:["A warning sign","A regulatory sign that sets a rule you must obey","A guide sign","A service sign"],a:1,e:"Branco e preto é regulamentação: controla o tráfego, define limites ou dá ordens.",ref:46},
+{c:"Formatos",pic:"guide",q:"A horizontal rectangle, usually green, is used for:",o:["Warnings about hazards","Guidance: directions, distances and destinations","Prohibitions","Construction zones"],a:1,e:"Verde e retangular na horizontal é orientação. Em azul, serviços; em marrom, áreas recreativas e históricas.",ref:46},
+{c:"Formatos",pic:"sh_diamond_orange",q:"Glare hides the words on this sign. From its shape and color, it is:",o:["A school crossing","A construction or maintenance warning","A speed limit","A guide sign"],a:1,e:"Losango laranja é sempre obra. Reduza antes mesmo de conseguir ler o texto.",ref:54},
+{c:"Formatos",q:"Which shape tells you to give the right-of-way without necessarily coming to a full stop?",o:["The octagon","The downward triangle","The pentagon","The vertical rectangle"],a:1,e:"O triângulo invertido, YIELD. Já o octógono exige parada total, mesmo com a via vazia.",ref:47},
+{c:"Formatos",q:"Snow, mud or a faded surface covers a sign's message. What still tells you what kind of sign it is?",o:["Nothing; you must ignore it","Its shape and color","The height of the post","The direction it faces"],a:1,e:"Forma, cor, símbolos e palavras dão a pista do tipo de informação. Formato e cor sobrevivem quando o texto some.",ref:46},
+{c:"Formatos",pic:"sh_triangle",q:"Even with no words visible, this shape and color tell you to:",o:["Come to a full stop","Slow down and give the right-of-way","Turn right only","Merge left"],a:1,e:"É a silhueta do YIELD. Diferente do STOP, você só para se houver alguém vindo.",ref:47},
+{c:"Formatos",pic:"sh_pennant",q:"You see this shape on the left shoulder ahead. It means:",o:["A sharp curve","The start of a no-passing zone","Merge right","One-way traffic"],a:1,e:"Nenhuma outra placa fica à esquerda da pista. Só por essa posição você já sabe do que se trata.",ref:48},
+{c:"Formatos",pic:"sh_circle",q:"A yellow sign of this shape almost always warns of:",o:["A roundabout","A railroad crossing ahead","A rest area","A dead end"],a:1,e:"O círculo amarelo é reservado ao aviso antecipado de passagem de nível.",ref:56},
+{c:"Formatos",pic:"sh_cross",q:"This shape marks:",o:["A pedestrian crossing","A railroad crossing","A hospital entrance","A construction detour"],a:1,e:"O crossbuck. Vale como uma placa de YIELD: você cede ao trem.",ref:56},
+{c:"Formatos",pic:"sh_vrect",q:"A sign of this shape, in black and white, normally:",o:["Warns of a hazard","Sets a rule you must obey","Gives directions","Points to services"],a:1,e:"Retângulo vertical em preto e branco é regulamentação: limite de velocidade, proibições, ordens.",ref:46},
+{c:"Formatos",pic:"sh_hrect",q:"A sign of this shape and color gives you:",o:["A warning","Directions, distances and destinations","A prohibition","A construction alert"],a:1,e:"Retângulo horizontal verde é orientação. Nas interestaduais da Flórida, os marcos de milha coincidem com os números das saídas.",ref:46},
+
 /* ===== VELOCIDADE, FAIXAS E DISTÂNCIAS ===== */
 {c:"Velocidade",q:"Unless otherwise posted, the speed limit in a Florida business or residential area is:",o:["20 mph","30 mph","45 mph","55 mph"],a:1,e:"30 mph é o padrão. Zona escolar sinalizada é 20 mph, ruas e rodovias comuns 55 mph.",ref:68},
 {c:"Velocidade",q:"Unless otherwise posted, the maximum speed limit on a Florida limited access highway is:",o:["55 mph","65 mph","70 mph","75 mph"],a:2,e:"70 mph em limited access highway. Em streets and highways em geral, 55 mph.",ref:68},
@@ -303,7 +344,7 @@ const BANK = [
 {c:"Manobras",q:"When emergency braking with anti-lock brakes (ABS), you should:",o:["Pump the brake pedal","Apply firm, steady pressure and keep steering","Release the brake repeatedly","Use the parking brake"],a:1,e:"Com ABS, pressão firme e contínua, sem bombear — o sistema pulsa sozinho. Sem ABS, aí sim você bombeia para não travar as rodas.",ref:78}
 ];
 
-const CATS = ["Todas","Preferência","Placas","Velocidade","Leis","Emergências","Manobras"];
+const CATS = ["Todas","Placas","Formatos","Preferência","Velocidade","Leis","Emergências","Manobras"];
 const MODES = [
   {label:"Treino · 10",              n:10, max:null},
   {label:"Treino · 20",              n:20, max:null},
@@ -367,8 +408,8 @@ function start(){
   let picked;
   if(m.mix && cat === "Todas"){
     // prova oficial: 10 de placas + 40 de regras, como na FLHSMV
-    const signs = shuffle(BANK.filter(q => q.c === "Placas")).slice(0,10);
-    const rules = shuffle(BANK.filter(q => q.c !== "Placas")).slice(0,40);
+    const signs = shuffle(BANK.filter(q => q.c === "Placas" || q.c === "Formatos")).slice(0,10);
+    const rules = shuffle(BANK.filter(q => q.c !== "Placas" && q.c !== "Formatos")).slice(0,40);
     picked = shuffle(signs.concat(rules));
   } else {
     const size = m.n === 0 ? pool.length : Math.min(m.n, pool.length);
